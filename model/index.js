@@ -1,20 +1,20 @@
-const { Sequelize } = require('sequelize');
-require('dotenv').config();
-const mysql2 = require('mysql2');
+require('dotenv').config();  // Import dotenv to load .env variables
 
+const { Sequelize } = require('sequelize');
+
+// Konfigurasi koneksi Sequelize dengan environment variables
 const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
+    process.env.DB_NAME,      // Database name
+    process.env.DB_USER,      // Database user
+    process.env.DB_PASSWORD,  // Database password
     {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        dialect: process.env.DB_DIALECT,
-        dialectModule: mysql2, // Ensure mysql2 is used
+        host: process.env.DB_HOST,   // Database host
+        port: process.env.DB_PORT,   // Database port
+        dialect: process.env.DB_DIALECT,  // Database dialect (mysql)
     }
 );
 
-// Test connection
+// Uji koneksi
 sequelize.authenticate()
     .then(() => {
         console.log('Connection has been established successfully.');
@@ -23,5 +23,5 @@ sequelize.authenticate()
         console.error('Unable to connect to the database:', err);
     });
 
-// Export sequelize instance
+// Ekspor instance sequelize untuk digunakan di tempat lain
 module.exports = sequelize;
